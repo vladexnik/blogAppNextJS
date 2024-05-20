@@ -1,41 +1,29 @@
-import React from 'react'
+'use client';
 import styles from '../page.module.css';
 import { Metadata } from 'next';
-import Link from 'next/link';
-import IPost from '@/models/models';
+import { useEffect, useState } from 'react';
+import Posts from '@/components/Posts';
+import { getAllPosts } from '@/services/getAllPosts';
+import PostSearch from '@/components/PostSearch';
 
-async function getData() {
-  const response=await fetch('https://jsonplaceholder.typicode.com/posts',{
-    next:{
-      revalidate: 60
-    }
-  })
-  if(!response.ok){
-    throw new Error('Unable to load posts now. Please try later')
-  }
-  return response.json();
-}
 
-export const metadata: Metadata = {
-  title: "Blog",
-  description: 'about how we are cool'
-};
+const BlogPage =  () => {
+  const [posts, setPosts]=useState<any[]>([])
+  const [loading, setLoading]=useState(true);
 
-const BlogPage = async () => {
-  const posts=await getData();
-
+  useEffect(()=>{
+    getAllPosts()
+      .then(setPosts)
+      .finally(()=> setLoading(false))
+  },[])
+  
   return (
     <>
-      <h1 className={styles.main}>BlogPage</h1>
-      <ul>
-        {posts.map((post: IPost)=>(
-          <li key={post.id}>
-            <Link href={`blog/${post.id}`}>{post.title}</Link>
-          </li>
-          )
-        )}
-      </ul>
-
+      <h1 className={styles.main}>Blog Page</h1>
+      <PostSearch onSearch={setPosts}/>
+      {loading ? <h3>Loading...</h3> :
+         <Posts posts={posts}/>
+      }
     </>
   )
 }

@@ -1,10 +1,17 @@
 import Link from 'next/link'
 import React from 'react'
+import Navigation from './Navigation';
+
+const navItems=[
+  {label: 'Home', href: '/'},
+  {label: 'Blog', href: '/blog'},
+  {label: 'About', href: '/about'},
+];
 
 const Header = () => {
   return (
     <header className='container'>
-        <Link className="" href='/'>
+        {/* <Link className="" href='/'>
             Home
         </Link>
         <Link className="" href='/blog'>
@@ -12,7 +19,8 @@ const Header = () => {
         </Link>
         <Link className="" href='/about'>
             About
-        </Link>
+        </Link> */}
+        <Navigation navLinks={navItems}/>
     </header>
   )
 }

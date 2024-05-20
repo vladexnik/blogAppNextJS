@@ -33,6 +33,10 @@
   border-radius: var(--border-radius);
 }
 
+.active{
+  color: blue;
+}
+
 .code {
   font-weight: 700;
   font-family: var(--font-mono);
