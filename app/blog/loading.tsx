@@ -1,4 +1,3 @@
-
 const LoadingPosts = () => {
   return (
     <div>Loading...</div>
